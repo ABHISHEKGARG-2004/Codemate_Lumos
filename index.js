@@ -19,6 +19,9 @@ app.get('/', (req, res) => {
     res.send('CodeMate API is running...');
 });
 
+app.use('/api/auth', require('./routes/authRoutes'));
+
+
 const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(app);
