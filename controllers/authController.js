@@ -36,3 +36,23 @@ exports.register = async (req, res) => {
         })
     }
 }
+
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ email });
+        if (user && (await bcrypt.compare(password, user.password))) {
+            res.json({
+                _id: user._id,
+                username: user.username,
+                email: user.email,
+                role: user.role,
+                token: token(user._id, user.role),
+            });
+        } else {
+            res.status(401).json({ message: 'Invalid email or password' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
