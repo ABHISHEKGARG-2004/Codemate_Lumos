@@ -31,3 +31,15 @@ exports.get = async (req, res) => {
         res.status(500).json({ message: 'Server error' });
     }
 };
+
+exports.getActiveSessions = async (req, res) => {
+    try {
+        const sessions = await Session.find({})
+            .populate('raisedBy.user', 'username')
+            .sort({ isHandRaised: -1, updatedAt: -1 }); 
+
+        res.json(sessions);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error' });
+    }
+};
