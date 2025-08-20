@@ -44,12 +44,10 @@ The project follows a modular structure to ensure a clean and scalable codebase.
 ├── routes/
 │   ├── authRoutes.js
 │   └── sessionRoutes.js
-├── services/
-│   └── socketManager.js
 ├── .env
 ├── .gitignore
 ├── package.json
-└── server.js
+└── index.js
 
 ```
 
