@@ -28,25 +28,30 @@ In many online learning environments, students find it difficult to articulate t
 
 📂 Project Structure
 The project follows a modular structure to ensure a clean and scalable codebase.
+```text
+.
+├── config/
+│   └── db.js
+├── controllers/
+│   ├── authController.js
+│   └── sessionController.js
+├── middleware/
+│   ├── authMiddleware.js
+│   └── roleMiddleware.js
+├── models/
+│   ├── Session.js
+│   └── User.js
+├── routes/
+│   ├── authRoutes.js
+│   └── sessionRoutes.js
+├── services/
+│   └── socketManager.js
+├── .env
+├── .gitignore
+├── package.json
+└── server.js
 
-config/: Holds configuration files, such as the database connection logic (db.js).
-
-controllers/: Contains the business logic for handling API requests.
-
-middleware/: Stores functions that execute before the controller logic, used for authentication and role checks.
-
-models/: Defines the Mongoose schemas for the database collections.
-
-routes/: Defines the API endpoints and maps them to controller functions.
-
-services/: Contains modules for specific business logic, like socketManager.js for real-time events.
-
-server.js: The main entry point that initializes the Express server.
-
-.env: Stores all environment variables (e.g., database URI, JWT secret).
-
-package.json: Lists all project dependencies and defines scripts.
-
+```
 
 ## 🚀 Getting Started
 
