@@ -11,10 +11,24 @@ connectDB();
 
 const app = express();
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL || 'http://localhost:3000',
+  'http://localhost:5173' // Add Vite's default port
+];
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    credentials: true
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true
 }));
+
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -29,10 +43,14 @@ const PORT = process.env.PORT || 5000;
 
 const server = http.createServer(app);
 const io = new Server(server, {
-    cors: {
-        origin: process.env.FRONTEND_URL || "http://localhost:3000",
-        methods: ["GET", "POST"]
-    }
+  cors: {
+    // We provide an array of allowed origins
+    origin: [
+      "http://localhost:3000", 
+      "http://localhost:5173"  
+    ],
+    methods: ["GET", "POST"]
+  }
 });
 initializeSocket(io);
 
