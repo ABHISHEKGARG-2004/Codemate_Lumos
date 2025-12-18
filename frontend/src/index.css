@@ -1,3 +1,4 @@
+/* General Body & Font Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background-color: #111827;
@@ -6,6 +7,7 @@ body {
     line-height: 1.5;
 }
 
+/* Main Page Container */
 .page-container {
     min-height: 100vh;
     display: flex;
@@ -16,6 +18,8 @@ body {
     box-sizing: border-box;
     position: relative;
 }
+
+/* Card for Forms */
 .card {
     background-color: #1f2937;
     padding: 2rem;
@@ -24,6 +28,8 @@ body {
     width: 100%;
     max-width: 448px;
 }
+
+/* Buttons */
 .btn {
     width: 100%;
     font-weight: bold;
@@ -47,6 +53,7 @@ body {
 .btn-blue:hover { background-color: #1d4ed8; }
 .btn:disabled { background-color: #4b5563; cursor: not-allowed; }
 
+/* Form Elements */
 .form-input, .form-select {
     width: 100%;
     background-color: #374151;
@@ -77,6 +84,7 @@ body {
 .form-divider:not(:empty)::before { margin-right: .25em; }
 .form-divider:not(:empty)::after { margin-left: .25em; }
 
+/* Header */
 .header {
     background-color: #1f2937;
     padding: 1rem;
@@ -94,6 +102,7 @@ body {
 .header-room-id { background-color: #374151; padding: 0.5rem 1rem; border-radius: 0.5rem; }
 .header-room-id button { background: none; border: none; color: white; cursor: pointer; }
 
+/* Editor Page Layout */
 .editor-page-layout { display: flex; flex-direction: column; height: 100vh; }
 .editor-main-content { display: flex; flex: 1; padding: 1rem; gap: 1rem; overflow: hidden; }
 .editor-column { width: 75%; display: flex; flex-direction: column; gap: 1rem; }
@@ -106,8 +115,10 @@ body {
 .participants-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
 .participant-item { background-color: #374151; padding: 0.5rem 1rem; border-radius: 0.5rem; }
 
+/* Dashboard */
 .dashboard-table { width: 100%; border-collapse: collapse; }
 .dashboard-table thead { background-color: #374151; }
 .dashboard-table th, .dashboard-table td { padding: 0.75rem; text-align: left; }
 .dashboard-table tbody tr { border-bottom: 1px solid #374151; }
 .dashboard-table tbody tr:hover { background-color: rgba(55, 65, 81, 0.5); }
+

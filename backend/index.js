@@ -7,6 +7,7 @@ const connectDB = require('./config/db');
 const initializeSocket = require('./services/socketManager');
 
 dotenv.config();
+
 connectDB();
 
 const app = express();
@@ -28,7 +29,6 @@ app.use(cors({
   },
   credentials: true
 }));
-
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -36,15 +36,15 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', require('./routes/authRoutes'));
-app.use('/api/sessions',require('./routes/sessionRoutes'));
+app.use('/api/sessions', require('./routes/sessionRoutes'));
 app.use('/api/execute', require('./routes/executionRoutes'));
 
-const PORT = process.env.PORT || 5000;
-
 const server = http.createServer(app);
+
+
 const io = new Server(server, {
   cors: {
-    // We provide an array of allowed origins
+  
     origin: [
       "http://localhost:3000", 
       "http://localhost:5173"  
@@ -53,6 +53,6 @@ const io = new Server(server, {
   }
 });
 initializeSocket(io);
-
+const PORT = process.env.PORT || 5000;
 
 server.listen(PORT, () => console.log(`Server listening on port ${PORT}`));

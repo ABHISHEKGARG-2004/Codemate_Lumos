@@ -7,4 +7,5 @@ const roleMiddleware = require('../middleware/roleMiddleware');
 router.post('/create', authMiddleware, create);
 router.get('/:roomId', authMiddleware, get);
 router.get('/active/dashboard', authMiddleware, roleMiddleware('TA'), getActiveSessions);
+
 module.exports = router;

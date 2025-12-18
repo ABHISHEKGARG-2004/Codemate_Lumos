@@ -5,10 +5,14 @@ import AuthPage from './pages/AuthPage';
 import EditorPage from './pages/EditorPage';
 import DashboardPage from './pages/DashboardPage';
 
+
 function AppRouter() {
+  
   const [page, setPage] = useState('home');
   const [roomId, setRoomId] = useState('');
+  
   const { isAuthenticated, user, loading } = useAuth();
+
   const navigateTo = (targetPage, targetRoomId = '') => {
     setPage(targetPage);
     setRoomId(targetRoomId);
@@ -18,9 +22,9 @@ function AppRouter() {
     return <div className="page-container" style={{justifyContent: 'center'}}>Loading...</div>;
   }
 
-  // Render logic for our "pages"
+
   const renderPage = () => {
-    
+
     if (page === 'editor' && roomId && isAuthenticated) {
       return <EditorPage roomId={roomId} navigateTo={navigateTo} />;
     }
@@ -30,7 +34,7 @@ function AppRouter() {
     if (page === 'auth') {
       return <AuthPage navigateTo={navigateTo} />;
     }
-    // Default to home page
+
     return <HomePage navigateTo={navigateTo} />;
     
   };

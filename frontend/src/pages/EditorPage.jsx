@@ -19,11 +19,15 @@ const EditorPage = ({ roomId, navigateTo }) => {
     const peerConnections = useRef({});
 
     useEffect(() => {
-
+        // Connect to the Socket.IO server
         socketRef.current = io('http://localhost:5000');
+
+        // On connection, join the room
         socketRef.current.on('connect', () => {
             socketRef.current.emit('join-room', { roomId, user: { ...user, userId: user._id, socketId: socketRef.current.id } });
         });
+
+        // Listen for the initial state of the room
         socketRef.current.on('initial-state', (state) => {
             setCode(state.code || '');
             setLanguage(state.language || 'javascript');
@@ -47,6 +51,7 @@ const EditorPage = ({ roomId, navigateTo }) => {
             }
         });
 
+        // Listen for a user leaving
         socketRef.current.on('user-left', ({ socketId }) => {
             setParticipants(prev => prev.filter(p => p.socketId !== socketId));
             if (peerConnections.current[socketId]) {
@@ -56,7 +61,7 @@ const EditorPage = ({ roomId, navigateTo }) => {
             }
         });
 
-
+        // Listen for code updates from others
         socketRef.current.on('code-update', newCode => setCode(newCode));
         socketRef.current.on('language-update', newLang => setLanguage(newLang));
 

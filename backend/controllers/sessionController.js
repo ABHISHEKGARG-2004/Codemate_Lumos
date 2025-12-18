@@ -1,24 +1,24 @@
-const Session=require('../models/Session');
-const {v4:uuidv4} =require('uuid');
-exports.create=async(req,res)=>{
-    try{
-        const roomId=uuidv4;
-        const newsession= new Session({
+
+const Session = require('../models/Session');
+const { v4: uuidv4 } = require('uuid');
+
+exports.create = async (req, res) => {
+    try {
+        const roomId = uuidv4();
+        const newSession = new Session({
             roomId,
-            participants:[req.user_id]
+            participants: [req.user._id],
         });
-        await newsession.save();
+        await newSession.save();
         res.status(201).json({
             message:"session created successfully",
-            newsession
-        })
-    }catch(error){
-        res.status(500).json({
-            message:"server error",
-            error:error.message
+            newSession
         });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
-}
+};
+
 
 exports.get = async (req, res) => {
     try {
@@ -32,12 +32,12 @@ exports.get = async (req, res) => {
     }
 };
 
-exports.getActiveSessions = async (req, res) => {
+
+exports.getActiveSessions= async (req, res) => {
     try {
         const sessions = await Session.find({})
             .populate('raisedBy.user', 'username')
             .sort({ isHandRaised: -1, updatedAt: -1 }); 
-
         res.json(sessions);
     } catch (error) {
         res.status(500).json({ message: 'Server error' });

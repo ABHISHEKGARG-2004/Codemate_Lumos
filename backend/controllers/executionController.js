@@ -29,11 +29,10 @@ exports.executeCode = async (req, res) => {
             headers: { 'Content-Type': 'application/json' }
         });
 
-        // JDoodle returns an 'output' field. We will send this back to the frontend.
-        // We'll mimic the structure Judge0 used for simplicity on the frontend.
+        
         res.json({
             stdout: response.data.output,
-            stderr: null, // JDoodle combines output, so we'll put everything in stdout
+            stderr: null, 
             compile_output: null,
             message: '',
             status: { id: response.data.statusCode === 200 ? 3 : 11, description: 'OK' }

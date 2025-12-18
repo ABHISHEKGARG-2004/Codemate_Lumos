@@ -1,10 +1,12 @@
-const User = require('../models/user');
+
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const token = (id, role) => {
+    console.log('SECRET USED FOR SIGNING:', process.env.JWT_SECRET);
     return jwt.sign({ id, role }, process.env.JWT_SECRET, {
-        expiresIn: '30d'
+        expiresIn: '30d',
     });
 };
 
@@ -20,22 +22,22 @@ exports.register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashed = await bcrypt.hash(password, salt);
         const user = await User.create({
-            username, email, password: hashed, role
+            username,
+            email,
+            password: hashed,
+            role,
         });
         res.status(201).json({
             _id: user._id,
             username: user.username,
             email: user.email,
             role: user.role,
-            token: token(user._id, user.role)
+            token: token(user._id, user.role),
         });
     } catch (error) {
-        res.status(500).json({
-            message: "Not able to register user",
-            error: error.message
-        })
+        res.status(500).json({ message: 'Server error', error: error.message });
     }
-}
+};
 
 exports.login = async (req, res) => {
     const { email, password } = req.body;
@@ -57,6 +59,6 @@ exports.login = async (req, res) => {
     }
 };
 
-exports.getprofile=async (req,res)=>{
+exports.getprofile = async (req, res) => {
     res.json(req.user);
-}
+};
