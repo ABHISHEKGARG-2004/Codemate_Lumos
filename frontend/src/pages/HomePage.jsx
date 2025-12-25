@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-
+const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
+  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
+  || "http://localhost:5000";
 const HomePage = ({ navigateTo }) => {
     const [roomIdInput, setRoomIdInput] = useState('');
     const { isAuthenticated, user, token, logout } = useAuth();
@@ -23,7 +25,7 @@ const HomePage = ({ navigateTo }) => {
             return;
         }
         try {
-            const res = await fetch(`http://localhost:5000/api/sessions/create`, {
+            const res = await fetch(`${BACKEND_URL}/api/sessions/create`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}` }
             });

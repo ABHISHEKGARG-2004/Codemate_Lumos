@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-
+const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
+  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
+  || "http://localhost:5000";
 const DashboardPage = ({ navigateTo }) => {
     const [sessions, setSessions] = useState([]);
     const { token, user, logout } = useAuth();
@@ -8,7 +10,7 @@ const DashboardPage = ({ navigateTo }) => {
     useEffect(() => {
         const fetchSessions = async () => {
             try {
-                const res = await fetch(`http://localhost:5000/api/sessions/active/dashboard`, {
+                const res = await fetch(`${BACKEND_URL}/api/sessions/active/dashboard`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
                 if (res.ok) {

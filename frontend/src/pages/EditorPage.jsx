@@ -3,7 +3,9 @@ import { io } from "socket.io-client";
 import Peer from 'peerjs';
 import { useAuth } from '../context/AuthContext';
 import Editor from '../components/Editor';
-
+const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
+  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
+  || "http://localhost:5000";
 const EditorPage = ({ roomId, navigateTo }) => {
     const { user, token, logout } = useAuth();
     const [participants, setParticipants] = useState([]);
@@ -20,7 +22,7 @@ const EditorPage = ({ roomId, navigateTo }) => {
 
     useEffect(() => {
         // Connect to the Socket.IO server
-        socketRef.current = io('http://localhost:5000');
+        socketRef.current = io(BACKEND_URL);
 
         // On connection, join the room
         socketRef.current.on('connect', () => {
@@ -131,7 +133,7 @@ const EditorPage = ({ roomId, navigateTo }) => {
         setIsLoading(true);
         setOutput('Executing...');
         try {
-            const res = await fetch(`http://localhost:5000/api/execute`, {
+            const res = await fetch(`${BACKEND_URL}/api/execute`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
                 body: JSON.stringify({ language, code })

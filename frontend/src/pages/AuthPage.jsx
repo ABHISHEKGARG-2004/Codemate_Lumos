@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-
+const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
+  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
+  || "http://localhost:5000";
 const AuthPage = ({ navigateTo }) => {
     const [isLogin, setIsLogin] = useState(true);
     const [username, setUsername] = useState('');
@@ -13,7 +15,7 @@ const AuthPage = ({ navigateTo }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
-        const url = isLogin ? `http://localhost:5000/api/auth/login` : `http://localhost:5000/api/auth/register`;
+        const url = isLogin ? `${BACKEND_URL}/api/auth/login` : `${BACKEND_URL}/api/auth/register`;
         const body = isLogin ? { email, password } : { username, email, password, role };
 
         try {
