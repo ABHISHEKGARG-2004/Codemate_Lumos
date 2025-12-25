@@ -1,3 +1,4 @@
+
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -5,8 +6,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const initializeSocket = require('./services/socketManager');
-
-dotenv.config();
+require('dotenv').config();
+// dotenv.config();
 
 // Connect to MongoDB
 connectDB();
