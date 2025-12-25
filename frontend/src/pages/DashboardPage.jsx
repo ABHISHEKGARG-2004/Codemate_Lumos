@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
-  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
-  || "http://localhost:5000";
+const BACKEND_URL = "https://codemate-lumos.onrender.com";
 const DashboardPage = ({ navigateTo }) => {
     const [sessions, setSessions] = useState([]);
     const { token, user, logout } = useAuth();

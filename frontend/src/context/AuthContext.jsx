@@ -1,10 +1,9 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import Peer from 'peerjs';
 
 const AuthContext = createContext();
-const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
-  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
-  || "http://localhost:5000";
+const BACKEND_URL =  "https://codemate-lumos.onrender.com"
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -15,13 +14,17 @@ export const AuthProvider = ({ children }) => {
     const validateToken = async () => {
       if (token) {
         try {
-          const res = await axios.get(`${BACKEND_URL}/api/auth/profile`, {
+          const res = await fetch(`${BACKEND_URL}/api/auth/profile`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          setUser(res.data);
+          if (res.ok) {
+            const data = await res.json();
+            setUser(data);
+          } else {
+            logout();
+          }
         } catch (error) {
-          console.error("Token validation failed", error);
-          logout();
+          console.error("Auth validation failed", error);
         }
       }
       setLoading(false);

@@ -3,9 +3,7 @@ import { io } from "socket.io-client";
 import Peer from 'peerjs';
 import { useAuth } from '../context/AuthContext';
 import Editor from '../components/Editor';
-const BACKEND_URL = (typeof process !== 'undefined' && process.env && process.env.VITE_BACKEND_URL) 
-  || (typeof window !== 'undefined' && window.VITE_BACKEND_URL)
-  || "http://localhost:5000";
+const BACKEND_URL = "https://codemate-lumos.onrender.com"
 const EditorPage = ({ roomId, navigateTo }) => {
     const { user, token, logout } = useAuth();
     const [participants, setParticipants] = useState([]);
